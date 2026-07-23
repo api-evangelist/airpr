@@ -1,7 +1,26 @@
 aid: airpr
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/airpr.png
 name: AirPR
-description: AirPR is a company surfaced as a portfolio company of 500-global and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  AirPR is a public relations analytics and media measurement company whose
+  software helped communications teams quantify the business impact of earned
+  media, tie coverage to web traffic and conversions, and benchmark share of
+  voice against competitors. AirPR is now part of Onclusive, the media
+  intelligence platform that monitors and enriches conversations across 3M+
+  online sources, 70K+ print outlets, 6K+ broadcast channels, and 25+ social
+  platforms for PR, communications, and marketing professionals. It was surfaced
+  as a portfolio company of 500 Global and added to the API Evangelist network.
 url: https://raw.githubusercontent.com/api-evangelist/airpr/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -14,6 +33,14 @@ created: '2026-07-17'
 modified: '2026-07-17'
 tags:
 - Company
+- Public Relations
+- Media Intelligence
+- Media Monitoring
+- Analytics
+- Communications
+- Marketing
+- PR Measurement
+- Onclusive
 apis: []
 maintainers:
 - FN: Kin Lane
@@ -23,3 +50,22 @@ maintainers:
 common:
 - type: Website
   url: https://onclusive.com
+- type: Blog
+  url: https://onclusive.com/resources/blog/
+- type: PrivacyPolicy
+  url: https://onclusive.com/legal/privacy-policy/
+- type: TermsOfService
+  url: https://onclusive.com/legal/terms-of-use/
+- type: Support
+  url: https://onclusive.com/our-company/contact-us/
+- type: TrustCenter
+  url: security/airpr-trust-center.yml
+- type: Compliance
+  url: https://trust.onclusive.com/
+- type: DomainSecurity
+  url: security/airpr-domain-security.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

@@ -1,0 +1,28 @@
+generated: '2026-07-17'
+method: searched
+probe: true
+source: https://trust.onclusive.com/
+url: https://trust.onclusive.com/
+certifications:
+- SOC 2 Type 2
+- ISO/IEC 27001
+- Cyber Essentials Plus
+- GDPR
+- CCPA
+- PDPA
+- Standard Contractual Clauses (SCC)
+- EcoVadis (Committed, Oct 2025)
+notes: >-
+  In 2025 Onclusive launched a company-wide ISO 27001 certification initiative
+  targeting completion in 2026. AirPR is now part of Onclusive; the trust center
+  covers the consolidated Onclusive platform.
+evidence:
+- source: https://trust.onclusive.com/
+  keywords:
+  - soc 2 type 2
+  - iso/iec 27001
+  - cyber essentials plus
+  - gdpr
+  - ccpa
+  - pdpa
+  - trust center
