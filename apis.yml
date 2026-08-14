@@ -30,7 +30,7 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-08-13'
 tags:
 - Company
 - Public Relations
@@ -41,7 +41,43 @@ tags:
 - Marketing
 - PR Measurement
 - Onclusive
-apis: []
+apis:
+- name: Onclusive Media API
+  description: >-
+    Data-as-a-Service access to Onclusive's media intelligence corpus — 28M+
+    daily media content items across print, online, broadcast and social media,
+    300K+ verified journalist contacts, and 250K+ global events — enriched with
+    sentiment and relevance scoring, IPTC topic classification across 1,200+
+    categories, entity recognition and social amplification metrics. Delivered
+    as REST APIs or as scheduled/triggered XML and RSS feeds with customisable
+    data schemas, for piping into BI tools, CRM systems and custom applications.
+    This is the API surface that survives AirPR's absorption into Onclusive;
+    airpr.com now 301s to onclusive.com. Access is sales-gated: Onclusive
+    publishes no OpenAPI, no base URL, no authentication reference and no
+    pricing, and the only routes in are a demo request and a contact form.
+  humanURL: https://onclusive.com/what-we-do/monitoring/media-api/
+  baseURL: null
+  x-base-url-note: >-
+    No base URL is published. Recorded as missing rather than guessed — the
+    Media API product page names no host, and the developer portal that would
+    carry the catalog is behind a Cognito login. Do not infer a host from the
+    domain.
+  x-access: sales-gated
+  tags:
+  - Media Intelligence
+  - Media Monitoring
+  - Data as a Service
+  - Public Relations
+  - Analytics
+  properties:
+  - type: Authentication
+    url: authentication/airpr-authentication.yml
+  - type: OAuthScopes
+    url: scopes/airpr-scopes.yml
+  - type: RateLimits
+    url: rate-limits/airpr-rate-limits.yml
+  - type: Plans
+    url: plans/airpr-plans-pricing.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -64,8 +100,49 @@ common:
   url: https://trust.onclusive.com/
 - type: DomainSecurity
   url: security/airpr-domain-security.yml
+- type: DeveloperPortal
+  url: https://developer.onclusive.com/
+- type: GitHubOrganization
+  url: https://github.com/AirPR
+- type: Authentication
+  url: authentication/airpr-authentication.yml
+- type: OAuthScopes
+  url: scopes/airpr-scopes.yml
+- type: Lifecycle
+  url: lifecycle/airpr-lifecycle.yml
+- type: Conformance
+  url: conformance/airpr-conformance.yml
+- type: Plans
+  url: plans/airpr-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/airpr-rate-limits.yml
+- type: LLMsTxt
+  url: llms/airpr-llms.txt
 x-enrichment:
-  date: '2026-07-19'
-  status: backfilled
+  date: '2026-08-13'
+  status: minimal
+  artifacts_added: 9
   pass: local-v1
-  note: backfilled from .gitignore signal + verified work evidence
+x-coverage:
+  state: gated
+  reason: sales-gate
+  detail: >-
+    Onclusive markets a Media API but publishes no reference for it — the
+    product page's only calls to action are "Arrange a Demo" and a contact form
+    — and the AWS API Gateway Developer Portal at developer.onclusive.com that
+    would carry the catalog renders an empty React shell to anonymous visitors,
+    with its content bundle returning 403 AccessDenied from S3 and its backing
+    REST API returning 403 "Missing Authentication Token" behind an Amazon
+    Cognito login.
+  evidence:
+  - url: https://onclusive.com/what-we-do/monitoring/media-api/
+    status: 200
+  - url: https://rcbv8po81k.execute-api.us-east-1.amazonaws.com/prod/catalog
+    status: 403
+  - url: https://developer.onclusive.com/custom-content/content-fragments/home/index.md
+    status: 403
+  - url: https://onclusive.com/openapi.json
+    status: 404
+  - url: https://airpr.com/.well-known/agent-card.json
+    status: 404
+  checked: '2026-08-13'
