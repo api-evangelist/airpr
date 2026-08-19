@@ -1,0 +1,114 @@
+generated: '2026-08-13'
+method: probed
+source: live GET of /.well-known/* on every host in apis.yml
+note: >-
+  RECORDED ABSENCE. Every /.well-known/ path was probed on all four hosts this
+  company controls (airpr.com, onclusive.com, developer.onclusive.com,
+  crawler-api-auth.onclusive.com) and NONE of them serves a well-known document.
+  airpr.com/onclusive.com return the WordPress 404 page (a 404 status with an
+  HTML body, not a document); developer.onclusive.com is an S3-backed
+  single-page app that answers 403 AccessDenied for any path outside its build;
+  crawler-api-auth.onclusive.com is an Amazon Cognito hosted-UI domain that
+  answers a JSON 404 for every well-known path. No `WellKnown` and no
+  `SecurityTxt` pointer is emitted in apis.yml, because the provider serves
+  neither surface.
+hosts:
+- host: airpr.com
+  note: 301s to onclusive.com; the AirPR brand no longer resolves to its own site
+- host: onclusive.com
+- host: developer.onclusive.com
+- host: crawler-api-auth.onclusive.com
+
+documents:
+- path: /.well-known/security.txt
+  host: onclusive.com
+  status: 404
+  file: null
+- path: /.well-known/openid-configuration
+  host: onclusive.com
+  status: 404
+  file: null
+- path: /.well-known/oauth-authorization-server
+  host: onclusive.com
+  status: 404
+  file: null
+- path: /.well-known/oauth-protected-resource
+  host: onclusive.com
+  status: 404
+  file: null
+- path: /.well-known/api-catalog
+  host: onclusive.com
+  status: 404
+  file: null
+- path: /.well-known/ai-plugin.json
+  host: onclusive.com
+  status: 404
+  file: null
+- path: /.well-known/agent-card.json
+  host: onclusive.com
+  status: 404
+  file: null
+- path: /.well-known/agent.json
+  host: onclusive.com
+  status: 404
+  file: null
+- path: /.well-known/security.txt
+  host: airpr.com
+  status: 404
+  file: null
+- path: /.well-known/agent-card.json
+  host: airpr.com
+  status: 404
+  file: null
+- path: /.well-known/agent.json
+  host: airpr.com
+  status: 404
+  file: null
+- path: /.well-known/security.txt
+  host: developer.onclusive.com
+  status: 403
+  file: null
+  note: S3 AccessDenied — the bucket denies anonymous reads outside the SPA build
+- path: /.well-known/agent-card.json
+  host: developer.onclusive.com
+  status: 403
+  file: null
+- path: /.well-known/agent.json
+  host: developer.onclusive.com
+  status: 403
+  file: null
+- path: /.well-known/openid-configuration
+  host: crawler-api-auth.onclusive.com
+  status: 404
+  file: null
+  note: >-
+    Cognito hosted-UI domains do not serve discovery; the discovery document for
+    this same user pool lives on the AWS Cognito IdP endpoint (see below).
+
+# Recorded separately and DELIBERATELY NOT counted as a provider well-known hit.
+# This is a real, anonymous, HTTP 200 OpenID Connect discovery document for the
+# Amazon Cognito user pool that fronts developer.onclusive.com — we found it by
+# reading the user pool id out of https://developer.onclusive.com/config.js.
+# Every human-facing endpoint it advertises (authorize/token/revoke/userInfo/
+# logout) is on crawler-api-auth.onclusive.com, a host Onclusive controls, so
+# the authorization server is genuinely theirs. But the discovery DOCUMENT is
+# served by Amazon at cognito-idp.us-east-1.amazonaws.com, not by an Onclusive
+# host, so it does not earn a `WellKnown` pointer. It is used as the evidence
+# base for authentication/ and scopes/ instead.
+out_of_band:
+- path: /.well-known/openid-configuration
+  host: cognito-idp.us-east-1.amazonaws.com
+  url: https://cognito-idp.us-east-1.amazonaws.com/us-east-1_F0XmSWr9T/.well-known/openid-configuration
+  status: 200
+  content_type: application/json
+  file: airpr-openid-configuration.json
+  belongs_to: >-
+    Amazon Cognito user pool us-east-1_F0XmSWr9T, referenced by
+    https://developer.onclusive.com/config.js as the Onclusive developer
+    portal's identity provider.
+  provider_controlled_endpoints:
+  - https://crawler-api-auth.onclusive.com/oauth2/authorize
+  - https://crawler-api-auth.onclusive.com/oauth2/token
+  - https://crawler-api-auth.onclusive.com/oauth2/revoke
+  - https://crawler-api-auth.onclusive.com/oauth2/userInfo
+  - https://crawler-api-auth.onclusive.com/logout

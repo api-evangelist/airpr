@@ -1,0 +1,89 @@
+generated: '2026-08-13'
+method: searched
+source: https://onclusive.com/legal/service-level-agreement/
+note: >-
+  AirPR is absorbed into Onclusive (airpr.com 301s to onclusive.com), so the
+  operative lifecycle commitments are Onclusive's published Service Level
+  Agreement. The SLA is a contractual availability + support document covering
+  the Onclusive platform generally; it names no API-specific commitment, and
+  Onclusive publishes no API versioning policy, no deprecation policy, and no
+  live status page.
+
+sla:
+  url: https://onclusive.com/legal/service-level-agreement/
+  uptime_target: '99.9%'
+  measurement_period: calendar month
+  exclusions:
+  - scheduled maintenance
+  - emergency maintenance
+  remedy: >-
+    Service credit capped at seven (7) days of Average Daily Fees in any single
+    month.
+  support_targets:
+  - severity: Level 1
+    definition: System down or inaccessible
+    response: Within 2 Business Hours
+    workaround: 3 Business Hours
+    resolution: 8 Business Hours
+  - severity: Level 2
+    definition: Significantly impairs use of the service
+    response: Within 5 Business Hours
+    workaround: 12 Business Hours
+    resolution: 1 Business Day
+  - severity: Level 3
+    definition: Limited problem or documented failure
+    response: Within 2 Business Days
+    workaround: 3 Business Days
+    resolution: 10 Business Days
+  - severity: Level 4
+    definition: Minor issue or feature request
+    response: Within 2 Business Days
+    workaround: 3 Business Days
+    resolution: Later of 30 days or the next major software revision
+  maintenance_windows:
+  - Friday 22:00 to Saturday 05:00 Pacific Time
+  - Saturday 22:00 to Sunday 05:00 Pacific Time
+  - Other windows announced outside business hours
+  maintenance_notice: Not less than twenty-four (24) hours in advance
+
+versioning:
+  scheme: null
+  current: null
+  docs: null
+  note: >-
+    No API versioning policy is published. The developer portal's backing REST
+    API is deployed on an AWS API Gateway `prod` stage
+    (rcbv8po81k.execute-api.us-east-1.amazonaws.com/prod, confirmed because that
+    stage answers "Missing Authentication Token" while every other stage name
+    probed answers "Forbidden"), but the stage is an implementation detail, not
+    a published version contract.
+
+deprecation:
+  policy_url: null
+  sunset_header: unknown
+  note: >-
+    No deprecation or sunset policy is published on any public Onclusive URL.
+    No `Deprecation` pointer is emitted.
+
+status_page:
+  url: null
+  probed: https://onclusive.statuspage.io/
+  status: 200
+  finding: >-
+    NOT A STATUS PAGE. https://status.onclusive.com/ does not resolve to a
+    status page — it 404s and lands on a SendGrid forms CDN asset. The Atlassian
+    Statuspage tenant https://onclusive.statuspage.io/ exists but redirects to
+    /inactive, meaning the page was provisioned and then deactivated. No
+    `StatusPage` pointer is emitted, because there is no operational status
+    surface for a customer or an agent to read.
+
+deprecated_operations: []
+
+x-evidence:
+- url: https://onclusive.com/legal/service-level-agreement/
+  status: 200
+- url: https://onclusive.statuspage.io/
+  status: 200
+  note: redirects to /inactive
+- url: https://status.onclusive.com/
+  status: 404

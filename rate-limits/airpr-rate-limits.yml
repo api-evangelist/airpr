@@ -1,0 +1,26 @@
+generated: '2026-08-13'
+method: searched
+source: https://onclusive.com/what-we-do/monitoring/media-api/
+limit_count: 0
+headers: []
+exhaustion_status: null
+note: >-
+  HONEST ZERO. No rate limit, quota, burst allowance or throttling behaviour is
+  documented on any publicly reachable Onclusive page, and no response headers
+  could be observed because there is no anonymously callable endpoint to
+  observe: the developer portal's backing API
+  (rcbv8po81k.execute-api.us-east-1.amazonaws.com/prod) rejects every
+  unauthenticated request with 403 "Missing Authentication Token" before any
+  RateLimit-* or X-RateLimit-* header would be emitted. Any real limits are
+  presumably set per contract during the sales/demo process. AWS API Gateway
+  usage plans (the mechanism this deployment would use) surface exhaustion as
+  429 with an X-Amzn-ErrorType of ThrottlingException, but that is inferred
+  from the platform and is NOT recorded here as an Onclusive-published fact.
+limits: []
+x-evidence:
+- url: https://rcbv8po81k.execute-api.us-east-1.amazonaws.com/prod/catalog
+  status: 403
+  note: '{"message":"Missing Authentication Token"} — no rate-limit headers returned'
+- url: https://onclusive.com/what-we-do/monitoring/media-api/
+  status: 200
+  note: product page documents no limits

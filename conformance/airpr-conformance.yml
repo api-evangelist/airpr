@@ -1,0 +1,87 @@
+generated: '2026-08-13'
+method: probed
+source: >-
+  https://cognito-idp.us-east-1.amazonaws.com/us-east-1_F0XmSWr9T/.well-known/openid-configuration
+  + https://trust.onclusive.com/
+note: >-
+  Conformance is asserted only where a document was actually fetched. There is
+  no OpenAPI to derive spec-shaped conformance from, so most cross-cutting
+  standards are recorded as not-established rather than false-by-inference.
+standards:
+- id: oidc-discovery
+  name: OpenID Connect Discovery 1.0
+  conforms: true
+  evidence: >-
+    Anonymous HTTP 200 discovery document at
+    cognito-idp.us-east-1.amazonaws.com/us-east-1_F0XmSWr9T/.well-known/openid-configuration
+    carrying issuer, authorization_endpoint, token_endpoint, jwks_uri,
+    userinfo_endpoint and scopes_supported.
+- id: oauth2
+  name: OAuth 2.0
+  conforms: true
+  evidence: >-
+    authorization_endpoint / token_endpoint / revocation_endpoint published;
+    response_types code and token; client_secret_basic and client_secret_post
+    token endpoint auth.
+- id: rfc7009-token-revocation
+  name: OAuth 2.0 Token Revocation
+  conforms: true
+  evidence: revocation_endpoint https://crawler-api-auth.onclusive.com/oauth2/revoke
+- id: rfc8414-oauth-authorization-server-metadata
+  name: OAuth 2.0 Authorization Server Metadata
+  conforms: false
+  evidence: >-
+    /.well-known/oauth-authorization-server returns 404 on every Onclusive host;
+    only the OIDC discovery variant is served, and it is served by AWS rather
+    than by an Onclusive host.
+- id: aws-sigv4
+  name: AWS Signature Version 4
+  conforms: true
+  evidence: >-
+    developer.onclusive.com ships apigateway-js-sdk/apigClient.js and
+    sigV4Client.js and configures a Cognito identity pool, so portal-issued
+    requests are SigV4-signed.
+- id: openapi
+  name: OpenAPI
+  conforms: false
+  evidence: >-
+    No OpenAPI or Swagger document is served at any probed path on airpr.com,
+    onclusive.com, developer.onclusive.com or the API Gateway execute-api host.
+- id: rfc9457-problem-details
+  name: RFC 9457 Problem Details
+  conforms: unknown
+  evidence: >-
+    No error contract is publicly readable; the only observable error bodies are
+    AWS API Gateway defaults ({"message":"Missing Authentication Token"}), which
+    are Amazon's shape, not Onclusive's.
+- id: rfc9116-security-txt
+  name: RFC 9116 security.txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 or 403 on every host probed.
+- id: a2a
+  name: A2A Agent Card
+  conforms: false
+  evidence: >-
+    /.well-known/agent-card.json and /.well-known/agent.json miss on every host.
+- id: soc2-type2
+  name: SOC 2 Type 2
+  conforms: true
+  evidence: Listed on https://trust.onclusive.com/ (see security/airpr-trust-center.yml)
+- id: iso-27001
+  name: ISO/IEC 27001
+  conforms: partial
+  evidence: >-
+    Listed on https://trust.onclusive.com/ as in progress with completion
+    scheduled for 2026, not as an achieved certification.
+- id: gdpr
+  name: GDPR
+  conforms: true
+  evidence: Listed on https://trust.onclusive.com/ with SCCs and a published DPA.
+- id: ccpa
+  name: CCPA
+  conforms: true
+  evidence: Listed on https://trust.onclusive.com/
+- id: cyber-essentials-plus
+  name: Cyber Essentials Plus
+  conforms: true
+  evidence: Listed on https://trust.onclusive.com/

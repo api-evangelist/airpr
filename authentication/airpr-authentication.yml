@@ -1,0 +1,93 @@
+generated: '2026-08-13'
+method: probed
+source: https://cognito-idp.us-east-1.amazonaws.com/us-east-1_F0XmSWr9T/.well-known/openid-configuration
+docs: https://developer.onclusive.com/
+note: >-
+  DERIVED FROM A LIVE, ANONYMOUS OIDC DISCOVERY DOCUMENT — not from an OpenAPI,
+  because Onclusive publishes no OpenAPI. AirPR was absorbed into Onclusive and
+  airpr.com now 301s to onclusive.com, so the surviving developer surface is
+  Onclusive's. https://developer.onclusive.com/ is an AWS API Gateway Developer
+  Portal (the aws-samples serverless reference app) whose /config.js names
+  Amazon Cognito user pool us-east-1_F0XmSWr9T with hosted-UI domain
+  crawler-api-auth.onclusive.com. That user pool's OIDC discovery document is
+  anonymously readable and is the only machine-readable contract-adjacent
+  artifact this company publishes. The API catalog itself is NOT readable: the
+  portal's backing REST API returns 403 "Missing Authentication Token" and the
+  portal's own content bundle returns 403 AccessDenied from S3.
+summary:
+  types:
+  - openIdConnect
+  - oauth2
+  api_key_in: []
+  oauth2_flows:
+  - authorizationCode
+  - implicit
+  identity_provider: Amazon Cognito
+  gated: true
+  gate: >-
+    Registration in the Cognito user pool is required before the developer
+    portal will render an API catalog; no anonymous path to a contract exists.
+
+schemes:
+- name: OnclusiveDeveloperPortalOIDC
+  type: openIdConnect
+  openIdConnectUrl: https://cognito-idp.us-east-1.amazonaws.com/us-east-1_F0XmSWr9T/.well-known/openid-configuration
+  issuer: https://cognito-idp.us-east-1.amazonaws.com/us-east-1_F0XmSWr9T
+  sources:
+  - well-known/airpr-openid-configuration.json
+  endpoints:
+    authorization: https://crawler-api-auth.onclusive.com/oauth2/authorize
+    token: https://crawler-api-auth.onclusive.com/oauth2/token
+    revocation: https://crawler-api-auth.onclusive.com/oauth2/revoke
+    userinfo: https://crawler-api-auth.onclusive.com/oauth2/userInfo
+    end_session: https://crawler-api-auth.onclusive.com/logout
+    jwks_uri: https://cognito-idp.us-east-1.amazonaws.com/us-east-1_F0XmSWr9T/.well-known/jwks.json
+  response_types_supported:
+  - code
+  - token
+  token_endpoint_auth_methods_supported:
+  - client_secret_basic
+  - client_secret_post
+  id_token_signing_alg_values_supported:
+  - RS256
+  subject_types_supported:
+  - public
+  scopes_supported:
+  - openid
+  - email
+  - phone
+  - profile
+
+- name: AWS_SigV4
+  type: http
+  scheme: aws-sigv4
+  sources:
+  - https://developer.onclusive.com/apigateway-js-sdk/apigClient.js
+  note: >-
+    The developer portal ships the standard AWS API Gateway JS SDK
+    (sigV4Client.js + apigClient.js) and a Cognito identity pool
+    (us-east-1:2709e35d-5527-4556-8068-c0c6987bce78), so portal-issued calls are
+    signed with AWS Signature Version 4 using credentials vended by that
+    identity pool. Recorded because the client code is public; the API
+    operations it signs for are not.
+
+x-not-found:
+  api_keys: >-
+    No API key scheme is documented on any public Onclusive page. The Media API
+    product page names no authentication method at all.
+  basic_auth: not documented
+  mutual_tls: not documented
+
+x-evidence:
+- url: https://cognito-idp.us-east-1.amazonaws.com/us-east-1_F0XmSWr9T/.well-known/openid-configuration
+  status: 200
+  content_type: application/json
+- url: https://developer.onclusive.com/config.js
+  status: 200
+  content_type: application/javascript
+- url: https://rcbv8po81k.execute-api.us-east-1.amazonaws.com/prod/catalog
+  status: 403
+  body: '{"message":"Missing Authentication Token"}'
+- url: https://developer.onclusive.com/custom-content/content-fragments/home/index.md
+  status: 403
+  body: S3 AccessDenied

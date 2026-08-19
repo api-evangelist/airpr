@@ -1,8 +1,15 @@
-generated: '2026-07-17'
+generated: '2026-08-13'
 method: searched
 probe: true
 source: https://trust.onclusive.com/
 url: https://trust.onclusive.com/
+note: >-
+  RE-CONFIRMED 2026-08-13 by direct fetch. This file is the SEARCHED (richer)
+  reading of the trust center and must not be replaced by the keyword-extraction
+  probe, which reduces the list to "SOC 2, ISO 27001, GDPR" and drops the Type 2
+  qualifier, the in-progress status of ISO 27001, and five further items. AirPR
+  is now part of Onclusive; the trust center covers the consolidated Onclusive
+  platform.
 certifications:
 - SOC 2 Type 2
 - ISO/IEC 27001
@@ -12,10 +19,33 @@ certifications:
 - PDPA
 - Standard Contractual Clauses (SCC)
 - EcoVadis (Committed, Oct 2025)
-notes: >-
-  In 2025 Onclusive launched a company-wide ISO 27001 certification initiative
-  targeting completion in 2026. AirPR is now part of Onclusive; the trust center
-  covers the consolidated Onclusive platform.
+in_progress:
+- name: ISO/IEC 27001
+  status: >-
+    Company-wide certification initiative launched in 2025, scheduled for
+    completion in 2026. Listed on the trust center but not yet an achieved
+    certification.
+documents:
+- Data Protection Policy
+- Incident Response Policy
+- Information Security Policy
+- Environmental Stewardship
+- ESG in Business Practice
+- Supplier Code of Conduct
+infrastructure: >-
+  Hosted with major cloud providers — Amazon Web Services and Azure are named,
+  alongside data centers. No detailed subprocessor list is published.
+gaps:
+  security_contact: >-
+    None published. No security@ address, no vulnerability disclosure policy, no
+    responsible disclosure process and no bug bounty program appears on the
+    trust center, on https://onclusive.com/how-we-do-it/fundamentals/security/,
+    or at /.well-known/security.txt on any host. No `Security` pointer is
+    emitted in apis.yml as a result.
+  self_service: >-
+    The trust center states "We are working on our security compliance. We can
+    provide completed questionnaires upon request" — several materials require
+    direct contact rather than download.
 evidence:
 - source: https://trust.onclusive.com/
   keywords:
@@ -26,3 +56,8 @@ evidence:
   - ccpa
   - pdpa
   - trust center
+- source: https://onclusive.com/how-we-do-it/fundamentals/security/
+  keywords:
+  - trust centre
+  - data security
+  - compliance

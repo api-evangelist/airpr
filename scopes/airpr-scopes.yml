@@ -1,0 +1,50 @@
+generated: '2026-08-13'
+method: probed
+source: https://cognito-idp.us-east-1.amazonaws.com/us-east-1_F0XmSWr9T/.well-known/openid-configuration
+note: >-
+  These are the scopes the Onclusive developer-portal authorization server
+  actually advertises in its OIDC discovery document. They are the four standard
+  OpenID Connect scopes and nothing more — Onclusive has defined no custom
+  resource-server scopes on this user pool, or has not exposed them in
+  discovery. NOT derived from an OpenAPI: Onclusive publishes none. No
+  API-permission or scope reference page exists on any public Onclusive URL, so
+  there is no richer `docs:` to point at.
+schemes:
+- name: OnclusiveDeveloperPortalOIDC
+  type: openIdConnect
+  source: well-known/airpr-openid-configuration.json
+  issuer: https://cognito-idp.us-east-1.amazonaws.com/us-east-1_F0XmSWr9T
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://crawler-api-auth.onclusive.com/oauth2/authorize
+    tokenUrl: https://crawler-api-auth.onclusive.com/oauth2/token
+  - flow: implicit
+    authorizationUrl: https://crawler-api-auth.onclusive.com/oauth2/authorize
+scopes:
+- scope: openid
+  description: >-
+    Standard OpenID Connect scope; requests an ID token identifying the
+    authenticated developer-portal user.
+  standard: true
+  flows: [authorizationCode, implicit]
+  sources: [well-known/airpr-openid-configuration.json]
+- scope: email
+  description: Releases the user's email address and email_verified claim.
+  standard: true
+  flows: [authorizationCode, implicit]
+  sources: [well-known/airpr-openid-configuration.json]
+- scope: phone
+  description: Releases the user's phone_number and phone_number_verified claims.
+  standard: true
+  flows: [authorizationCode, implicit]
+  sources: [well-known/airpr-openid-configuration.json]
+- scope: profile
+  description: Releases the user's basic profile claims.
+  standard: true
+  flows: [authorizationCode, implicit]
+  sources: [well-known/airpr-openid-configuration.json]
+scope_count: 4
+custom_scope_count: 0
+x-evidence:
+- url: https://cognito-idp.us-east-1.amazonaws.com/us-east-1_F0XmSWr9T/.well-known/openid-configuration
+  status: 200

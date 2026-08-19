@@ -1,0 +1,31 @@
+generated: '2026-08-13'
+method: searched
+source: https://onclusive.com/what-we-do/monitoring/media-api/
+plan_count: 0
+pricing_model: contact-sales
+currency: null
+free_tier: false
+trial: false
+self_service_signup: false
+note: >-
+  HONEST ZERO. Onclusive publishes no pricing of any kind — not for the Media
+  API, not for the platform. The full page sitemap (467 URLs across
+  page-sitemap1-3.xml) contains no /pricing, /plans, /packages or /signup page
+  in any locale. The Media API product page describes the data volumes
+  (28M+ daily media items, 300K+ journalist contacts, 250K+ global events) and
+  the delivery options (REST APIs, standard XML/RSS feeds, custom schemas) but
+  states no price, no quota, no unit of billing and no self-service path — the
+  only calls to action are "Arrange a Demo" and a contact form. AirPR's own
+  historical pricing is gone with the brand; airpr.com 301s to onclusive.com.
+plans: []
+access:
+  route: demo request / contact sales
+  urls:
+  - https://onclusive.com/what-we-do/monitoring/media-api/
+  - https://onclusive.com/our-company/contact-us/
+x-evidence:
+- url: https://onclusive.com/what-we-do/monitoring/media-api/
+  status: 200
+- url: https://onclusive.com/sitemap.xml
+  status: 200
+  note: 467 page URLs enumerated; no pricing or signup page present

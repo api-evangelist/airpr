@@ -1,12 +1,38 @@
-generated: '2026-07-17'
+generated: '2026-08-13'
 method: probed
-source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+source: live DNS/TLS/HTTP probes of apis.yml hosts + the developer-portal and auth hosts
+note: >-
+  Extends the mechanical probe (probe-domain-security.py, which resolves only
+  the apis.yml Website host) with the three further hosts contract discovery
+  turned up: the legacy airpr.com origin, the AWS-hosted developer portal, and
+  the Cognito hosted-UI domain that fronts it. No host in this estate sets HSTS,
+  and neither registrable domain is DNSSEC-signed or publishes a CAA record.
 hosts:
 - host: onclusive.com
   https: true
   tls_version: TLSv1.3
   cert_expires: Oct  1 21:56:45 2026 GMT
   hsts: false
+- host: airpr.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 29 15:02:40 2026 GMT
+  hsts: false
+  note: >-
+    Still live and separately certificated, but 301s to onclusive.com. DNS is an
+    ALIAS to airpr.com.herokudns.com — the original AirPR Heroku estate.
+- host: developer.onclusive.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Jan 12 23:59:59 2027 GMT
+  hsts: false
+  note: CloudFront in front of an S3 origin (AWS API Gateway Developer Portal)
+- host: crawler-api-auth.onclusive.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Jan 12 23:59:59 2027 GMT
+  hsts: false
+  note: Amazon Cognito hosted UI for user pool us-east-1_F0XmSWr9T
 domains:
 - domain: onclusive.com
   dnssec: false
@@ -14,3 +40,16 @@ domains:
   spf: true
   dmarc: true
   dmarc_policy: quarantine
+- domain: airpr.com
+  dnssec: false
+  caa: []
+  spf: true
+  spf_record: >-
+    v=spf1 include:spf.protection.outlook.com include:_spf.google.com
+    include:_spf.salesforce.com include:mktomail.com include:sendgrid.net ~all
+  dmarc: true
+  dmarc_policy: quarantine
+  dmarc_record: 'v=DMARC1; p=quarantine; pct=50; rua=mailto:airadmin@airpr.com'
+  note: >-
+    DMARC is still enforced at only 50% sampling (pct=50) and reports still go
+    to an @airpr.com mailbox years after the Onclusive acquisition.

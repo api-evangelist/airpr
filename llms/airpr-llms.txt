@@ -1,0 +1,77 @@
+# AirPR (now part of Onclusive)
+
+> AirPR was a public relations analytics and media measurement company whose software let
+> communications teams quantify the business impact of earned media, tie coverage to web traffic
+> and conversions, and benchmark share of voice against competitors. AirPR is now part of
+> Onclusive, a media intelligence platform monitoring 3M+ online sources, 70K+ print outlets,
+> 6K+ broadcast channels and 25+ social platforms. The AirPR brand no longer operates its own
+> site — airpr.com redirects to onclusive.com — and the surviving developer surface is
+> Onclusive's.
+
+## Status for agents
+
+- There is **no public machine-readable API contract**. No OpenAPI, Swagger, GraphQL SDL,
+  AsyncAPI, Postman collection, MCP server or A2A agent card is published at any probed URL on
+  airpr.com, onclusive.com, developer.onclusive.com or the API Gateway host behind the portal.
+- An API **does** exist and is marketed: the Onclusive Media API, a Data-as-a-Service feed of
+  media content, journalist contacts and events, delivered as REST APIs and as standard
+  XML/RSS feeds with customisable schemas.
+- Access is **sales-gated**. The only routes are "Arrange a Demo" and a contact form. There is
+  no pricing page, no self-service sign-up and no free tier anywhere on the 467-page site.
+- The developer portal at developer.onclusive.com is an AWS API Gateway Developer Portal whose
+  API catalog requires a login in an Amazon Cognito user pool. Anonymously it renders an empty
+  React shell: its content bundle returns 403 AccessDenied and its backing REST API returns
+  403 "Missing Authentication Token".
+- An agent cannot currently call this provider. Evaluate integration through the demo/contact
+  route, not through a spec.
+
+## APIs
+
+- [Onclusive Media API](https://onclusive.com/what-we-do/monitoring/media-api/): Data-as-a-Service
+  access to 28M+ daily media content items across print, online, broadcast and social, plus
+  300K+ verified journalist contacts and 250K+ global events. AI-enriched with sentiment and
+  relevance scoring, IPTC topic classification (1,200+ categories), entity recognition and
+  social amplification metrics. Delivered via REST APIs or scheduled/triggered XML and RSS
+  feeds into BI tools, CRM systems and custom applications. No base URL, authentication scheme
+  or reference is published.
+
+## Authentication
+
+- [OIDC discovery document](https://cognito-idp.us-east-1.amazonaws.com/us-east-1_F0XmSWr9T/.well-known/openid-configuration):
+  the one anonymously readable machine-readable artifact this company exposes. Amazon Cognito
+  user pool `us-east-1_F0XmSWr9T`, hosted UI on `crawler-api-auth.onclusive.com`, authorization
+  code and implicit flows, RS256 ID tokens, scopes `openid email phone profile`. Portal calls
+  are additionally AWS SigV4 signed via a Cognito identity pool.
+
+## Docs
+
+- [Developer portal](https://developer.onclusive.com/): AWS API Gateway Developer Portal; catalog behind login
+- [Service Level Agreement](https://onclusive.com/legal/service-level-agreement/): 99.9% monthly uptime, four support severity levels
+- [Security](https://onclusive.com/how-we-do-it/fundamentals/security/)
+- [Trust Center](https://trust.onclusive.com/): SOC 2 Type 2, Cyber Essentials Plus, GDPR, CCPA, PDPA, SCCs; ISO/IEC 27001 in progress for 2026
+- [Support](https://onclusive.com/our-company/contact-us/)
+- [Blog](https://onclusive.com/resources/blog/)
+- [Terms of Use](https://onclusive.com/legal/terms-of-use/)
+- [Privacy Policy](https://onclusive.com/legal/privacy-policy/)
+- [GDPR Data Processing Addendum](https://onclusive.com/legal/gdpr-dataprocessingaddendum/)
+
+## Code
+
+- [AirPR on GitHub](https://github.com/AirPR): the legacy AirPR engineering organization, 26 public
+  repositories. Almost all are forks of third-party Ruby/Rails infrastructure gems and Heroku/AWS
+  operational tooling. It contains **no first-party client SDK for any AirPR or Onclusive API**
+  and no API specification. Treat it as engineering history, not as an integration surface.
+
+## API Evangelist artifacts
+
+- [apis.yml](https://raw.githubusercontent.com/api-evangelist/airpr/refs/heads/main/apis.yml)
+- authentication/airpr-authentication.yml
+- scopes/airpr-scopes.yml
+- lifecycle/airpr-lifecycle.yml
+- conformance/airpr-conformance.yml
+- well-known/airpr-well-known.yml (recorded absence)
+- well-known/airpr-openid-configuration.json (verbatim)
+- plans/airpr-plans-pricing.yml (plan_count 0)
+- rate-limits/airpr-rate-limits.yml (limit_count 0)
+- security/airpr-trust-center.yml
+- security/airpr-domain-security.yml
